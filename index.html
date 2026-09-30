@@ -3,1207 +3,354 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vaibhav Tripathi — Hydrology, Hydroclimatology & AI Research</title>
-<meta name="description" content="Vaibhav Tripathi — PhD researcher in the Department of Water Resources Development and Management, IIT Roorkee. Working on hydrological extremes, flood resilience and explainable AI.">
-
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b1d1f'/%3E%3Cpath d='M4 20c3-6 6 6 9 0s6 6 9 0s5 4 6 1' stroke='%2352ddc0' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
-
+<title>Vaibhav Tripathi — Hydrology &amp; Water Resources Research</title>
+<meta name="description" content="Vaibhav Tripathi is a PhD researcher at the Department of Water Resources Development and Management, IIT Roorkee, working on hydroclimatic extremes, flood modelling, and explainable AI for streamflow forecasting.">
+<meta property="og:title" content="Vaibhav Tripathi — Hydrology &amp; Water Resources Research">
+<meta property="og:description" content="PhD researcher at IIT Roorkee working on floods, hydroclimatic extremes, and explainable AI for hydrology.">
+<meta property="og:image" content="assets/img/profile.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Newsreader:ital,wght@1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-/* ============================================================
-   DESIGN TOKENS
-   A river's journey — Source, Headwaters, Reach, Basin, Gauge Log,
-   Confluence, Estuary — forms the structure of this whole page.
-   ============================================================ */
-:root{
-  --ink-950:#060f11;
-  --ink-900:#0b1d1f;
-  --ink-800:#102a2c;
-  --ink-700:#153538;
-  --ink-650:#1a3f41;
-  --line:#24484a;
-  --line-soft:rgba(82,221,192,.14);
-  --foam:#eaf5f1;
-  --foam-dim:#9dc0ba;
-  --foam-dim2:#719592;
-  --teal:#52ddc0;
-  --teal-dim:#2e857a;
-  --amber:#e3a857;
-  --amber-dim:#b98136;
-
-  --f-display:'Space Grotesk', system-ui, sans-serif;
-  --f-body:'Inter', system-ui, sans-serif;
-  --f-accent:'Newsreader', Georgia, serif;
-  --f-mono:'IBM Plex Mono', 'Courier New', monospace;
-
-  --rail-w:96px;
-  --edge:clamp(1.5rem, 5vw, 4.5rem);
-  --radius:14px;
-}
-
-*,*::before,*::after{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto;}
-  *,*::before,*::after{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
-}
-
-body{
-  margin:0;
-  background:
-    radial-gradient(1200px 700px at 15% -10%, #0f2c2c 0%, transparent 60%),
-    linear-gradient(180deg, #0c2224 0%, #0a1c1e 40%, #071617 75%, #050f10 100%);
-  color:var(--foam);
-  font-family:var(--f-body);
-  font-size:16px;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-}
-
-::selection{ background:var(--teal); color:var(--ink-950); }
-
-a{ color:inherit; }
-img{ max-width:100%; display:block; }
-
-h1,h2,h3,h4{ font-family:var(--f-display); font-weight:600; margin:0; letter-spacing:-.01em; }
-
-.container{ max-width:1180px; margin:0 auto; padding-inline:var(--edge); }
-
-:focus-visible{
-  outline:2px solid var(--teal);
-  outline-offset:3px;
-  border-radius:4px;
-}
-
-/* ============================================================
-   AMBIENT CONTOUR TEXTURE — a topographic map, barely there
-   ============================================================ */
-.contours{
-  position:fixed; inset:0; z-index:0; pointer-events:none;
-  opacity:.35; mix-blend-mode:screen;
-}
-.contours svg{ width:100%; height:100%; }
-
-/* ============================================================
-   RAIL NAV — a river gauge staff. Each tick is a station this
-   career has passed through, in the order the water would take.
-   ============================================================ */
-.rail{
-  position:fixed; top:0; left:0; height:100vh; width:var(--rail-w);
-  z-index:50; display:flex; flex-direction:column; align-items:center;
-  justify-content:space-between; padding:1.75rem 0;
-  border-right:1px solid var(--line);
-  background:linear-gradient(180deg, rgba(10,26,28,.9), rgba(7,20,22,.9));
-  backdrop-filter:blur(6px);
-}
-.rail-brand{
-  writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
-  font-family:var(--f-mono); font-size:.68rem; letter-spacing:.24em; color:var(--foam-dim2);
-  text-decoration:none;
-}
-.rail-brand b{ color:var(--teal); font-weight:600; }
-.rail-stations{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1.55rem; position:relative; }
-.rail-stations::before{
-  content:""; position:absolute; left:50%; top:6px; bottom:6px; width:1px;
-  background:linear-gradient(180deg, transparent, var(--line) 8%, var(--line) 92%, transparent);
-  transform:translateX(-50%); z-index:-1;
-}
-.rail-stations a{
-  display:flex; flex-direction:column; align-items:center; gap:.4rem; text-decoration:none;
-  color:var(--foam-dim2); position:relative; padding:.15rem;
-}
-.rail-dot{
-  width:9px; height:9px; border-radius:50%; background:var(--ink-700);
-  border:1px solid var(--line); transition:all .25s ease;
-}
-.rail-code{
-  font-family:var(--f-mono); font-size:.62rem; letter-spacing:.12em;
-  writing-mode:vertical-rl; transform:rotate(180deg);
-  transition:color .25s ease;
-}
-.rail-stations a:hover .rail-dot, .rail-stations a.active .rail-dot{
-  background:var(--teal); border-color:var(--teal);
-  box-shadow:0 0 0 4px var(--line-soft);
-}
-.rail-stations a.active .rail-code, .rail-stations a:hover .rail-code{ color:var(--teal); }
-
-.rail-flow{
-  width:1px; background:var(--teal); position:absolute; left:50%; top:6px;
-  transform:translateX(-50%); transition:height .25s ease; box-shadow:0 0 8px var(--teal);
-}
-
-.rail-mail{
-  font-family:var(--f-mono); font-size:.62rem; color:var(--foam-dim2); text-decoration:none;
-  writing-mode:vertical-rl; letter-spacing:.1em; transform:rotate(180deg);
-}
-.rail-mail:hover{ color:var(--teal); }
-
-/* Mobile top bar */
-.topbar{ display:none; }
-
-@media (max-width: 880px){
-  .rail{ display:none; }
-  .topbar{
-    display:flex; position:fixed; top:0; left:0; right:0; z-index:50;
-    align-items:center; justify-content:space-between;
-    padding:.9rem var(--edge); border-bottom:1px solid var(--line);
-    background:rgba(8,20,22,.88); backdrop-filter:blur(8px);
-  }
-  .topbar-brand{ font-family:var(--f-mono); font-size:.72rem; letter-spacing:.18em; color:var(--foam-dim); }
-  .topbar-brand b{ color:var(--teal); }
-  .menu-btn{
-    background:none; border:1px solid var(--line); color:var(--foam);
-    width:38px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
-  }
-  .menu-btn span{ display:block; width:16px; height:1px; background:var(--foam); position:relative; }
-  .menu-btn span::before,.menu-btn span::after{ content:""; position:absolute; left:0; width:16px; height:1px; background:var(--foam); }
-  .menu-btn span::before{ top:-5px; } .menu-btn span::after{ top:5px; }
-
-  .mobile-nav{
-    position:fixed; inset:0; z-index:60; background:rgba(6,15,17,.98);
-    display:flex; flex-direction:column; padding:5.5rem var(--edge) 2rem;
-    transform:translateY(-100%); transition:transform .35s ease; overflow:auto;
-  }
-  .mobile-nav.open{ transform:translateY(0); }
-  .mobile-nav a{
-    font-family:var(--f-display); font-size:1.6rem; color:var(--foam); text-decoration:none;
-    padding:.7rem 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:baseline;
-  }
-  .mobile-nav a span{ font-family:var(--f-mono); font-size:.7rem; color:var(--teal); }
-  .mobile-close{ position:absolute; top:1.1rem; right:var(--edge); background:none; border:0; color:var(--foam); font-size:1.6rem; cursor:pointer; }
-  main{ padding-top:64px; }
-}
-
-main{ position:relative; z-index:1; margin-left:var(--rail-w); }
-@media (max-width: 880px){ main{ margin-left:0; } }
-
-section{ position:relative; padding:6.5rem 0; border-bottom:1px solid var(--line); }
-section:last-of-type{ border-bottom:none; }
-
-.eyebrow{
-  font-family:var(--f-mono); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase;
-  color:var(--teal); display:flex; align-items:center; gap:.6rem; margin-bottom:1.1rem;
-}
-.eyebrow::before{ content:""; width:22px; height:1px; background:var(--teal); }
-.eyebrow .idx{ color:var(--foam-dim2); }
-
-/* Reveal-on-scroll */
-[data-reveal]{ opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
-[data-reveal].in-view{ opacity:1; transform:translateY(0); }
-[data-reveal="fade"]{ transform:none; }
-
-/* ============================================================
-   HERO — SOURCE
-   ============================================================ */
-.hero{ padding-top:9rem; min-height:92vh; display:flex; align-items:center; border-bottom:1px solid var(--line); }
-.hero-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:3rem; align-items:center; }
-@media (max-width:980px){ .hero-grid{ grid-template-columns:1fr; } }
-
-.hero-name{ font-size:clamp(2.6rem, 6vw, 4.6rem); line-height:1.02; margin:.5rem 0 1rem; }
-.hero-tagline{
-  font-family:var(--f-accent); font-style:italic; font-weight:400;
-  font-size:clamp(1.15rem, 2vw, 1.5rem); color:var(--foam-dim); max-width:34ch; margin-bottom:1.4rem;
-}
-.hero-desc{ color:var(--foam-dim); max-width:52ch; margin-bottom:2.1rem; }
-
-.btn-row{ display:flex; gap:.9rem; flex-wrap:wrap; margin-bottom:3rem; }
-.btn{
-  font-family:var(--f-mono); font-size:.78rem; letter-spacing:.05em; text-decoration:none;
-  padding:.85rem 1.3rem; border-radius:999px; display:inline-flex; align-items:center; gap:.5rem;
-  transition:all .2s ease; cursor:pointer; border:1px solid var(--line); background:transparent; color:var(--foam);
-}
-.btn.primary{ background:var(--teal); color:var(--ink-950); border-color:var(--teal); font-weight:600; }
-.btn.primary:hover{ background:#6ee9d0; transform:translateY(-2px); }
-.btn:not(.primary):hover{ border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
-
-.stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; max-width:520px; }
-.stat b{
-  font-family:var(--f-display); font-size:clamp(1.5rem,2.4vw,2.1rem); color:var(--teal); display:block;
-}
-.stat span{ font-family:var(--f-mono); font-size:.66rem; letter-spacing:.06em; color:var(--foam-dim2); text-transform:uppercase; }
-@media (max-width:560px){ .stat-row{ grid-template-columns:repeat(2,1fr); row-gap:1.6rem; } }
-
-.hydrograph-wrap{ position:relative; }
-.hydrograph-wrap svg{ width:100%; height:auto; overflow:visible; }
-.hg-line{ fill:none; stroke:var(--teal); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
-.hg-fill{ fill:url(#hgGrad); opacity:.55; }
-.hg-caption{ font-family:var(--f-mono); font-size:.62rem; letter-spacing:.1em; fill:var(--foam-dim2); }
-.hg-peak{ fill:var(--amber); }
-
-/* thin divider echo of the hydrograph, reused between sections */
-.flow-divider{ width:100%; opacity:.5; margin:0 auto; display:block; }
-.flow-divider path{ fill:none; stroke:var(--line); stroke-width:1.4; }
-
-/* ============================================================
-   SECTION HEADS
-   ============================================================ */
-.head-row{ display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; margin-bottom:2.6rem; flex-wrap:wrap; }
-.head-row h2{ font-size:clamp(1.8rem,3vw,2.6rem); }
-.head-note{ font-family:var(--f-mono); font-size:.75rem; color:var(--foam-dim2); max-width:32ch; text-align:right; }
-@media (max-width:700px){ .head-note{ text-align:left; } }
-
-/* ============================================================
-   CATCHMENT — About
-   ============================================================ */
-.about-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:3.5rem; }
-@media (max-width:900px){ .about-grid{ grid-template-columns:1fr; gap:2.2rem; } }
-
-.avatar{
-  width:150px; height:150px; border-radius:26px; position:relative;
-  background:linear-gradient(155deg, var(--ink-700), var(--ink-800));
-  border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
-  overflow:hidden; margin-bottom:1.6rem;
-}
-.avatar span{ font-family:var(--f-display); font-size:2.6rem; color:var(--teal); font-weight:600; }
-.avatar svg{ position:absolute; inset:0; opacity:.5; }
-
-.about-copy p{ color:var(--foam-dim); margin:0 0 1.1rem; max-width:60ch; }
-.about-copy p:last-child{ margin-bottom:0; }
-
-.keyword-list{ display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.8rem; }
-.keyword{
-  font-family:var(--f-mono); font-size:.72rem; letter-spacing:.02em; padding:.5rem .9rem;
-  border-radius:999px; border:1px solid var(--line); color:var(--foam-dim); background:var(--ink-800);
-}
-
-.mini-label{ font-family:var(--f-mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--foam-dim2); margin-bottom:.9rem; display:block; }
-
-/* ============================================================
-   TIMELINE — Headwaters (Education) & Reach (Experience)
-   ============================================================ */
-.timeline{ position:relative; padding-left:2.6rem; }
-.timeline::before{
-  content:""; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background:var(--line);
-}
-.tl-item{ position:relative; padding-bottom:2.7rem; }
-.tl-item:last-child{ padding-bottom:0; }
-.tl-item::before{
-  content:""; position:absolute; left:-2.6rem; top:4px; width:11px; height:11px; border-radius:50%;
-  background:var(--ink-900); border:2px solid var(--teal);
-}
-.tl-period{ font-family:var(--f-mono); font-size:.72rem; color:var(--teal); letter-spacing:.05em; display:block; margin-bottom:.4rem; }
-.tl-item h3{ font-size:1.25rem; margin-bottom:.25rem; }
-.tl-org{ color:var(--foam-dim); font-size:.92rem; margin-bottom:.7rem; display:block; }
-.tl-item ul{ margin:.5rem 0 0; padding-left:1.15rem; color:var(--foam-dim); }
-.tl-item li{ margin-bottom:.4rem; }
-.tl-item li:last-child{ margin-bottom:0; }
-.tl-meta{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.8rem; }
-.tl-tag{
-  font-family:var(--f-mono); font-size:.66rem; padding:.3rem .65rem; border-radius:6px;
-  background:var(--ink-800); border:1px solid var(--line); color:var(--foam-dim2);
-}
-
-.leadership-strip{ margin-top:3.2rem; padding-top:2.6rem; border-top:1px dashed var(--line); }
-.leadership-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1.4rem; }
-@media (max-width:760px){ .leadership-grid{ grid-template-columns:1fr 1fr; } }
-@media (max-width:480px){ .leadership-grid{ grid-template-columns:1fr; } }
-.lead-card{
-  border:1px solid var(--line); border-radius:var(--radius); padding:1.1rem 1.2rem; background:var(--ink-800);
-}
-.lead-card b{ display:block; font-family:var(--f-display); font-size:.98rem; margin-bottom:.3rem; }
-.lead-card span{ font-family:var(--f-mono); font-size:.68rem; color:var(--foam-dim2); }
-
-/* ============================================================
-   BASIN — Research domain cards
-   ============================================================ */
-.domain-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1.1rem; }
-@media (max-width:980px){ .domain-grid{ grid-template-columns:repeat(2,1fr); } }
-@media (max-width:560px){ .domain-grid{ grid-template-columns:1fr; } }
-
-.domain-card{
-  border:1px solid var(--line); border-radius:var(--radius); padding:1.5rem 1.4rem;
-  background:linear-gradient(160deg, var(--ink-800), var(--ink-900));
-  transition:border-color .25s ease, transform .25s ease;
-  cursor:default;
-}
-.domain-card:hover{ border-color:var(--teal-dim); transform:translateY(-4px); }
-.domain-icon{ width:34px; height:34px; margin-bottom:1rem; color:var(--teal); }
-.domain-card h3{ font-size:1.02rem; margin-bottom:.55rem; line-height:1.3; }
-.domain-card p{ font-size:.85rem; color:var(--foam-dim2); margin:0; line-height:1.55; }
-
-/* ============================================================
-   GAUGE LOG — Publications
-   ============================================================ */
-.filter-row{ display:flex; gap:.6rem; margin-bottom:2rem; flex-wrap:wrap; }
-.filter-btn{
-  font-family:var(--f-mono); font-size:.72rem; padding:.5rem 1rem; border-radius:999px;
-  border:1px solid var(--line); background:transparent; color:var(--foam-dim); cursor:pointer; transition:all .2s ease;
-}
-.filter-btn[aria-pressed="true"]{ background:var(--teal); color:var(--ink-950); border-color:var(--teal); font-weight:600; }
-.filter-btn:hover{ border-color:var(--teal); }
-
-.pub-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; }
-.pub-item{
-  display:grid; grid-template-columns:2.6rem 1fr auto; gap:1.1rem; align-items:start;
-  padding:1.4rem 0; border-bottom:1px solid var(--line);
-}
-.pub-item:first-child{ padding-top:0; }
-.pub-num{ font-family:var(--f-mono); color:var(--foam-dim2); font-size:.82rem; padding-top:.15rem; }
-.pub-title{ font-family:var(--f-display); font-weight:600; font-size:1.02rem; line-height:1.4; margin-bottom:.5rem; }
-.pub-status{ font-family:var(--f-mono); font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; padding:.28rem .6rem; border-radius:6px; display:inline-block; }
-.pub-status.published{ color:var(--teal); background:rgba(82,221,192,.1); border:1px solid var(--teal-dim); }
-.pub-status.review{ color:var(--amber); background:rgba(227,168,87,.1); border:1px solid var(--amber-dim); }
-.pub-link{
-  font-family:var(--f-mono); font-size:.75rem; color:var(--foam-dim); text-decoration:none; white-space:nowrap;
-  border:1px solid var(--line); padding:.5rem .85rem; border-radius:8px; transition:all .2s ease; align-self:center;
-}
-.pub-link:hover{ color:var(--teal); border-color:var(--teal); }
-.pub-item.hidden{ display:none; }
-@media (max-width:640px){
-  .pub-item{ grid-template-columns:2rem 1fr; }
-  .pub-link{ grid-column:1/-1; justify-self:start; }
-}
-
-/* ============================================================
-   CONFLUENCE — Conferences / Awards / Skills / Memberships
-   ============================================================ */
-.confluence-grid{ display:grid; grid-template-columns:1.3fr .7fr; gap:3rem; margin-bottom:3.2rem; }
-@media (max-width:900px){ .confluence-grid{ grid-template-columns:1fr; } }
-
-.waypoints{ display:flex; gap:1rem; overflow-x:auto; padding-bottom:1rem; margin:0 -.2rem; scrollbar-width:thin; }
-.waypoint{
-  flex:0 0 220px; border:1px solid var(--line); border-radius:var(--radius); padding:1.1rem 1.2rem;
-  background:var(--ink-800);
-}
-.waypoint .coord{ font-family:var(--f-mono); font-size:.64rem; color:var(--teal); letter-spacing:.03em; }
-.waypoint h4{ font-family:var(--f-display); font-size:.95rem; margin:.5rem 0 .3rem; }
-.waypoint p{ font-family:var(--f-mono); font-size:.68rem; color:var(--foam-dim2); margin:0; line-height:1.5; }
-.waypoint .tag{ display:inline-block; margin-top:.6rem; font-family:var(--f-mono); font-size:.6rem; color:var(--amber); border:1px solid var(--amber-dim); padding:.2rem .5rem; border-radius:5px; }
-
-details.full-log{ margin-top:1.6rem; border:1px solid var(--line); border-radius:var(--radius); background:var(--ink-800); overflow:hidden; }
-details.full-log summary{
-  cursor:pointer; list-style:none; padding:1rem 1.3rem; font-family:var(--f-mono); font-size:.75rem; color:var(--foam-dim); display:flex; justify-content:space-between; align-items:center;
-}
-details.full-log summary::-webkit-details-marker{ display:none; }
-details.full-log summary::after{ content:"+"; font-size:1.1rem; color:var(--teal); }
-details.full-log[open] summary::after{ content:"–"; }
-.log-list{ list-style:none; margin:0; padding:0 1.3rem 1.3rem; font-size:.85rem; color:var(--foam-dim); }
-.log-list li{ padding:.55rem 0; border-top:1px solid var(--line); }
-.log-list li:first-child{ border-top:none; }
-
-.side-col h3{ font-size:1.1rem; margin-bottom:1rem; }
-.award-list{ list-style:none; margin:0 0 2.2rem; padding:0; }
-.award-list li{ font-size:.86rem; color:var(--foam-dim); padding:.6rem 0; border-top:1px solid var(--line); }
-.award-list li:first-child{ border-top:none; }
-
-.chip-group{ display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1.6rem; }
-.chip{ font-family:var(--f-mono); font-size:.7rem; padding:.4rem .75rem; border-radius:7px; border:1px solid var(--line); color:var(--foam-dim); }
-
-.skills-block{ margin-top:3rem; padding-top:2.6rem; border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(2,1fr); gap:2.2rem; }
-@media (max-width:760px){ .skills-block{ grid-template-columns:1fr; } }
-.skill-cat{ margin-bottom:1.3rem; }
-.skill-cat:last-child{ margin-bottom:0; }
-.skill-cat .mini-label{ margin-bottom:.6rem; }
-
-/* ============================================================
-   ESTUARY — Contact
-   ============================================================ */
-.estuary{ padding-bottom:4rem; }
-.estuary-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:3rem; align-items:start; }
-@media (max-width:900px){ .estuary-grid{ grid-template-columns:1fr; } }
-
-.estuary h2{ font-size:clamp(2rem,4vw,3rem); margin-bottom:1rem; }
-.estuary-copy{ font-family:var(--f-accent); font-style:italic; color:var(--foam-dim); font-size:1.15rem; max-width:38ch; margin-bottom:2rem; }
-
-.email-row{ display:flex; align-items:center; gap:.8rem; margin-bottom:2.2rem; flex-wrap:wrap; }
-.email-btn{
-  font-family:var(--f-mono); font-size:.95rem; background:var(--ink-800); border:1px solid var(--line);
-  color:var(--foam); padding:.9rem 1.2rem; border-radius:10px; cursor:pointer; transition:all .2s ease;
-}
-.email-btn:hover{ border-color:var(--teal); color:var(--teal); }
-.copy-feedback{ font-family:var(--f-mono); font-size:.72rem; color:var(--teal); opacity:0; transition:opacity .3s ease; }
-.copy-feedback.show{ opacity:1; }
-
-.link-plates{ display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
-@media (max-width:480px){ .link-plates{ grid-template-columns:1fr; } }
-.plate{
-  display:flex; justify-content:space-between; align-items:center; padding:.95rem 1.1rem;
-  border:1px solid var(--line); border-radius:10px; text-decoration:none; color:var(--foam);
-  font-family:var(--f-mono); font-size:.78rem; background:var(--ink-800); transition:all .2s ease;
-}
-.plate:hover{ border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
-.plate .arrow{ opacity:.5; }
-
-.coord-block{ font-family:var(--f-mono); font-size:.72rem; color:var(--foam-dim2); line-height:2; border-left:2px solid var(--line); padding-left:1rem; }
-.coord-block b{ color:var(--foam-dim); font-weight:500; }
-
-footer{
-  padding:2.2rem var(--edge); border-top:1px solid var(--line); display:flex; justify-content:space-between;
-  align-items:center; flex-wrap:wrap; gap:1rem; margin-left:var(--rail-w); position:relative; z-index:1;
-  font-family:var(--f-mono); font-size:.68rem; color:var(--foam-dim2);
-}
-@media (max-width:880px){ footer{ margin-left:0; } }
-footer a{ color:var(--foam-dim2); text-decoration:none; } footer a:hover{ color:var(--teal); }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-<!-- Ambient topographic contour texture -->
-<div class="contours" aria-hidden="true">
-  <svg viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice">
-    <g fill="none" stroke="#52ddc0" stroke-width="1">
-      <path d="M-100 200 C 200 120, 400 280, 650 180 S 1100 260, 1300 160" opacity=".18"/>
-      <path d="M-100 260 C 220 190, 420 330, 660 240 S 1080 320, 1300 220" opacity=".14"/>
-      <path d="M-100 320 C 240 260, 440 380, 670 300 S 1060 380, 1300 280" opacity=".1"/>
-      <path d="M-100 700 C 180 640, 460 820, 720 700 S 1100 760, 1300 660" opacity=".14"/>
-      <path d="M-100 760 C 200 710, 480 880, 740 760 S 1080 820, 1300 720" opacity=".1"/>
-      <path d="M-100 1150 C 240 1080, 480 1260, 760 1140 S 1120 1220, 1300 1100" opacity=".12"/>
-      <path d="M-100 1210 C 260 1150, 500 1320, 780 1200 S 1100 1280, 1300 1160" opacity=".08"/>
-    </g>
-  </svg>
-</div>
-
-<!-- ============ RAIL NAV (desktop) ============ -->
-<nav class="rail" aria-label="Section navigation">
-  <a href="#source" class="rail-brand"><b>VT</b> · HYDROLOGY &amp; AI</a>
-  <ul class="rail-stations">
-    <li><a href="#source" data-station="source"><span class="rail-dot"></span><span class="rail-code">01 SOURCE</span></a></li>
-    <li><a href="#catchment" data-station="catchment"><span class="rail-dot"></span><span class="rail-code">02 CATCHMENT</span></a></li>
-    <li><a href="#headwaters" data-station="headwaters"><span class="rail-dot"></span><span class="rail-code">03 HEADWATERS</span></a></li>
-    <li><a href="#reach" data-station="reach"><span class="rail-dot"></span><span class="rail-code">04 REACH</span></a></li>
-    <li><a href="#basin" data-station="basin"><span class="rail-dot"></span><span class="rail-code">05 BASIN</span></a></li>
-    <li><a href="#gauge-log" data-station="gauge-log"><span class="rail-dot"></span><span class="rail-code">06 GAUGE LOG</span></a></li>
-    <li><a href="#confluence" data-station="confluence"><span class="rail-dot"></span><span class="rail-code">07 CONFLUENCE</span></a></li>
-    <li><a href="#estuary" data-station="estuary"><span class="rail-dot"></span><span class="rail-code">08 ESTUARY</span></a></li>
-  </ul>
-  <a href="mailto:vaib.tripathi28.vt@gmail.com" class="rail-mail">EMAIL →</a>
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#top" class="brand">Vaibhav Tripathi</a>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#publications">Publications</a>
+      <a href="#conferences">Conferences</a>
+      <a href="#awards">Awards</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
 </nav>
 
-<!-- ============ TOP BAR (mobile) ============ -->
-<div class="topbar">
-  <span class="topbar-brand"><b>VT</b> · HYDROLOGY &amp; AI</span>
-  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false"><span></span></button>
-</div>
-<div class="mobile-nav" id="mobileNav">
-  <button class="mobile-close" id="mobileClose" aria-label="Close menu">×</button>
-  <a href="#source"><span>01</span>Source</a>
-  <a href="#catchment"><span>02</span>Catchment</a>
-  <a href="#headwaters"><span>03</span>Headwaters</a>
-  <a href="#reach"><span>04</span>Reach</a>
-  <a href="#basin"><span>05</span>Basin</a>
-  <a href="#gauge-log"><span>06</span>Gauge Log</a>
-  <a href="#confluence"><span>07</span>Confluence</a>
-  <a href="#estuary"><span>08</span>Estuary</a>
-</div>
+<header class="hero" id="top">
+  <svg class="hero-contour" viewBox="0 0 900 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M -20 300 C 120 260, 180 320, 300 270 C 420 220, 480 280, 600 240 C 720 200, 800 250, 920 210" fill="none" stroke="#1B4B4F" stroke-width="1" opacity="0.18"/>
+    <path d="M -20 330 C 130 300, 190 350, 320 310 C 440 270, 500 320, 620 285 C 740 250, 800 290, 920 255" fill="none" stroke="#1B4B4F" stroke-width="1" opacity="0.14"/>
+    <path d="M -20 255 C 110 210, 170 270, 280 225 C 400 175, 470 230, 590 190 C 710 150, 790 200, 920 165" fill="none" stroke="#B8823D" stroke-width="1" opacity="0.16"/>
+    <path d="M -20 210 C 100 165, 160 215, 260 175 C 380 130, 450 180, 570 145 C 690 105, 780 150, 920 120" fill="none" stroke="#1B4B4F" stroke-width="1" opacity="0.10"/>
+  </svg>
+  <div class="hero-inner">
+    <div>
+      <p class="hero-eyebrow">Water Resources Development &amp; Management, IIT Roorkee</p>
+      <h1>Vaibhav Tripathi</h1>
+      <p class="hero-role">PhD researcher working at the intersection of hydrology, hydroclimatology, and artificial intelligence — with a focus on floods, streamflow forecasting, and explainable AI across Indian river basins.</p>
+      <div class="hero-links">
+        <a href="mailto:vaibhav_t@wr.iitr.ac.in">vaibhav_t@wr.iitr.ac.in</a>
+        <a href="assets/files/Vaibhav_Tripathi_CV.pdf">Download CV</a>
+        <a href="#" id="link-scholar">Google Scholar</a>
+        <a href="#" id="link-linkedin">LinkedIn</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="assets/img/profile.jpg" alt="Portrait of Vaibhav Tripathi" width="148" height="148">
+    </div>
+  </div>
+</header>
 
 <main>
 
-<!-- ============================================================ -->
-<!-- 01 · SOURCE — Hero                                            -->
-<!-- ============================================================ -->
-<section id="source" class="hero">
-  <div class="container hero-grid">
-    <div>
-      <p class="eyebrow"><span class="idx">01 / SOURCE</span></p>
-      <h1 class="hero-name">Vaibhav<br>Tripathi</h1>
-      <p class="hero-tagline">Reading the language of rivers — where climate, catchments and machine learning meet.</p>
-      <p class="hero-desc">PhD researcher in the Department of Water Resources Development and Management, IIT Roorkee, working at the intersection of hydrology, hydroclimatology and artificial intelligence — mapping how climate and catchments shape floods across India's river basins.</p>
-      <div class="btn-row">
-        <a href="#basin" class="btn primary">View Research ↓</a>
-        <a href="#estuary" class="btn">Get in touch</a>
-      </div>
-      <div class="stat-row" id="statRow">
-        <div class="stat"><b data-count="8">0</b><span>Publications</span></div>
-        <div class="stat"><b data-count="21">0</b><span>Conference Talks</span></div>
-        <div class="stat"><b data-count="5">0</b><span>Countries</span></div>
-        <div class="stat"><b data-count="3">0</b><span>Degrees</span></div>
-      </div>
-    </div>
+<section id="about">
+  <div class="section-inner">
+    <div class="section-head"><h2>About</h2><div class="rule"></div></div>
+    <p class="about-lede">I am a PhD student in the Department of Water Resources Development and Management at the Indian Institute of Technology Roorkee, India, working at the intersection of hydrology, hydroclimatology, and artificial intelligence. My research explores how climate, catchment characteristics, and human activities shape hydrological extremes and streamflow dynamics across river basins.</p>
+    <p>I develop hydrological forecasting systems that combine physical understanding with machine-learning and deep-learning techniques — including floodplain mapping over data-scarce regions, flood-process characterisation, large-sample hydrology, streamflow forecasting, baseflow contribution to floods, and short-to-sub-seasonal forecasting with uncertainty quantification, aimed at improving water-resource management under changing environmental conditions.</p>
+    <p>I'm always open to discussing research ideas, collaborations, and opportunities in hydrology, climate science, and data-driven environmental modelling.</p>
+    <p class="keywords">Flood Resilience <span class="sep">/</span> Hydroclimatic Extremes <span class="sep">/</span> Machine Learning <span class="sep">/</span> Explainable AI <span class="sep">/</span> Streamflow Forecasting <span class="sep">/</span> Hydroclimatology</p>
+  </div>
+</section>
 
-    <div class="hydrograph-wrap" aria-hidden="true">
-      <svg viewBox="0 0 560 340" fill="none">
-        <defs>
-          <linearGradient id="hgGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#52ddc0" stop-opacity=".55"/>
-            <stop offset="1" stop-color="#52ddc0" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <g font-family="IBM Plex Mono" class="hg-caption">
-          <text x="0" y="20">Q (m³/s)</text>
-          <text x="0" y="322">STREAMFLOW — RECESSION MODEL</text>
-        </g>
-        <g stroke="#1a3f41" stroke-width="1">
-          <line x1="0" y1="60" x2="560" y2="60"/>
-          <line x1="0" y1="140" x2="560" y2="140"/>
-          <line x1="0" y1="220" x2="560" y2="220"/>
-        </g>
-        <path class="hg-fill" d="M0,260 C 40,255 70,250 100,240 C 140,225 160,120 200,70 C 230,35 250,50 280,90 C 320,145 330,180 370,200 C 410,220 420,150 460,110 C 495,75 520,150 560,180 L560,300 L0,300 Z"/>
-        <path id="hgPath" class="hg-line" d="M0,260 C 40,255 70,250 100,240 C 140,225 160,120 200,70 C 230,35 250,50 280,90 C 320,145 330,180 370,200 C 410,220 420,150 460,110 C 495,75 520,150 560,180"/>
-        <circle class="hg-peak" cx="200" cy="70" r="4"/>
-        <text x="180" y="55" class="hg-caption">peak flow</text>
-        <circle class="hg-peak" cx="460" cy="110" r="4"/>
-        <text x="430" y="95" class="hg-caption">2nd event</text>
-      </svg>
+<section id="research">
+  <div class="section-inner">
+    <div class="section-head"><h2>Research</h2><div class="rule"></div></div>
+    <p style="color:var(--slate); margin-bottom:22px;">Eight interlinked areas anchor the work, most of it grounded in Indian river catchments and the monsoon system.</p>
+
+    <div class="research-item">
+      <h3>Flood event analysis across Peninsular India</h3>
+      <p>Identification of flood occurrences spanning 1980–2020 across more than 206 river catchments. <span class="research-tag">under review</span></p>
+    </div>
+    <div class="research-item">
+      <h3>Flood depth prediction, Ganga sub-basin</h3>
+      <p>Modelling flood depths and benchmarking against international flood-mapping datasets. <span class="research-tag">Environmental Science and Pollution Research</span></p>
+    </div>
+    <div class="research-item">
+      <h3>Flood susceptibility mapping in data-limited basins</h3>
+      <p>Risk assessment methods for complex, data-scarce systems such as the Kosi River basin. <span class="research-tag">Environmental &amp; Sustainability Indicators</span></p>
+    </div>
+    <div class="research-item">
+      <h3>Machine learning for flood magnitude</h3>
+      <p>TabNet-based prediction of flood magnitudes from static and dynamic catchment characteristics. <span class="research-tag">under review</span></p>
+    </div>
+    <div class="research-item">
+      <h3>Streamflow prediction in data-scarce regions</h3>
+      <p>An enhanced LSTM (En-LSTM) framework for daily streamflow forecasting over large watersheds. <span class="research-tag">Water Resources Management</span></p>
     </div>
   </div>
 </section>
 
-<svg class="flow-divider" viewBox="0 0 1200 24" preserveAspectRatio="none" aria-hidden="true"><path d="M0 12 C 150 2, 300 22, 450 12 S 750 2, 900 12 S 1100 20, 1200 10"/></svg>
-
-<!-- ============================================================ -->
-<!-- 02 · CATCHMENT — About                                        -->
-<!-- ============================================================ -->
-<section id="catchment">
-  <div class="container">
-    <p class="eyebrow"><span class="idx">02 / CATCHMENT</span> About</p>
-    <div class="about-grid">
-      <div data-reveal>
-        <div class="avatar">
-          <svg viewBox="0 0 150 150" aria-hidden="true"><circle cx="75" cy="75" r="70" stroke="#52ddc0" stroke-width="1" fill="none" opacity=".3"/><circle cx="75" cy="75" r="50" stroke="#52ddc0" stroke-width="1" fill="none" opacity=".3"/></svg>
-          <span>VT</span>
-        </div>
-        <span class="mini-label">Currently</span>
-        <p style="color:var(--foam-dim); font-size:.92rem; margin:0;">Doctoral Researcher<br>Dept. of Water Resources Development &amp; Management<br>Indian Institute of Technology Roorkee, India</p>
-      </div>
-      <div class="about-copy" data-reveal>
-        <p>I am a PhD student working at the intersection of hydrology, hydroclimatology, and artificial intelligence. My research explores how climate, catchment characteristics, and human activities shape hydrological extremes and streamflow dynamics across river basins.</p>
-        <p>I'm particularly interested in developing hydrological forecasting systems that combine physical understanding with advanced machine-learning and deep-learning techniques — mapping floodplains over data-scarce regions, characterising flood processes, and building short- to sub-seasonal streamflow forecasts with rigorous uncertainty quantification, all in service of better water-resource management under a changing climate.</p>
-        <p>I'm always open to discussing research ideas, collaborations, and opportunities in hydrology, climate science, and data-driven environmental modelling.</p>
-        <div class="keyword-list">
-          <span class="keyword">Flood Resilience</span>
-          <span class="keyword">Hydrological Extremes</span>
-          <span class="keyword">Machine Learning</span>
-          <span class="keyword">Explainable AI</span>
-          <span class="keyword">Streamflow Forecasting</span>
-          <span class="keyword">Hydroclimatology</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- 03 · HEADWATERS — Education                                   -->
-<!-- ============================================================ -->
-<section id="headwaters">
-  <div class="container">
-    <div class="head-row">
-      <div>
-        <p class="eyebrow"><span class="idx">03 / HEADWATERS</span> Education</p>
-        <h2>Where it began</h2>
-      </div>
-      <p class="head-note">Civil Engineering → Soil &amp; Water Engineering → Water Resources Management</p>
-    </div>
-
+<section id="education">
+  <div class="section-inner">
+    <div class="section-head"><h2>Education</h2><div class="rule"></div></div>
     <div class="timeline">
-      <div class="tl-item" data-reveal>
-        <span class="tl-period">2023 — Present</span>
-        <h3>Doctor of Philosophy</h3>
-        <span class="tl-org">Dept. of Water Resources Development &amp; Management, IIT Roorkee, India</span>
-        <ul>
-          <li>Thesis: "A Systematic Framework to Quantify Flood Resilience over Ganga Basin (India): Integrating Climate and Catchment Descriptors into Machine Learning Models"</li>
-          <li>Supervisor: Prof. Mohit Prakash Mohanty, Associate Professor, IIT Roorkee</li>
-        </ul>
-        <div class="tl-meta">
-          <span class="tl-tag">CGPA 9.14 / 10</span>
-          <span class="tl-tag">Institute Research Fellowship — Ministry of Education, GoI</span>
-        </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Jan 2023 – Present</div>
+        <h3>Doctor of Philosophy (PhD)</h3>
+        <div class="org">Indian Institute of Technology Roorkee, India</div>
+        <div class="meta">Supervisor: Prof. Mohit P. Mohanty</div>
       </div>
-
-      <div class="tl-item" data-reveal>
-        <span class="tl-period">2019 — 2022</span>
-        <h3>Master of Technology</h3>
-        <span class="tl-org">Dept. of Soil &amp; Water Conservation Engineering, GB Pant University of Agriculture &amp; Technology, Pantnagar, India</span>
-        <ul>
-          <li>Thesis: "Prediction of Bhimtal Lake Level Fluctuations Using Different Machine Learning Techniques"</li>
-          <li>Supervisor: Prof. Pradeep Singh Kashyap, GBPUAT Pantnagar</li>
-        </ul>
-        <div class="tl-meta">
-          <span class="tl-tag">First Division — CGPA 7.89 / 10</span>
-          <span class="tl-tag">MoE Fellowship</span>
-        </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2019 – 2022</div>
+        <h3>Master of Technology (M.Tech)</h3>
+        <div class="org">Govind Ballabh Pant University of Agriculture and Technology, India</div>
+        <div class="meta">Supervisor: Prof. Pradeep S. Kashyap</div>
       </div>
-
-      <div class="tl-item" data-reveal>
-        <span class="tl-period">2014 — 2018</span>
-        <h3>Bachelor of Technology</h3>
-        <span class="tl-org">Dept. of Civil Engineering, BML Munjal University, Gurugram, India</span>
-        <ul>
-          <li>Major project: Modular construction systems using steel, concrete &amp; recyclable materials for sustainable infrastructure</li>
-          <li>Supervisor: Prof. Kamal Kant Jain, BML Munjal University</li>
-        </ul>
-        <div class="tl-meta">
-          <span class="tl-tag">Silver Medalist</span>
-          <span class="tl-tag">CGPA 7.89 / 10</span>
-        </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2014 – 2018</div>
+        <h3>Bachelor of Technology (B.Tech), Civil Engineering</h3>
+        <div class="org">BML Munjal University, India</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================ -->
-<!-- 04 · REACH — Experience                                       -->
-<!-- ============================================================ -->
-<section id="reach">
-  <div class="container">
-    <div class="head-row">
-      <div>
-        <p class="eyebrow"><span class="idx">04 / REACH</span> Experience</p>
-        <h2>The path downstream</h2>
-      </div>
-      <p class="head-note">From site engineering to the classroom to the field — before the PhD</p>
-    </div>
-
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-head"><h2>Experience</h2><div class="rule"></div></div>
     <div class="timeline">
-      <div class="tl-item" data-reveal>
-        <span class="tl-period">Jul 2022 — Dec 2022</span>
+      <div class="timeline-item">
+        <div class="timeline-date">Jul 2022 – Dec 2022</div>
         <h3>Project Associate</h3>
-        <span class="tl-org">Rejuvenation of three Ganga tributaries, Bijnor district</span>
-        <ul>
-          <li>Coordinated fieldwork and technical deliverables for the tributary rejuvenation project</li>
-          <li>Mapped encroachments and riverbank change through field visits, producing high-resolution ground-truth datasets</li>
-          <li>Generated thematic basin maps using historical CORONA imagery and contemporary satellite data for change detection</li>
-          <li>Ran land-use/land-cover classification, water-quality sampling and hydrological modelling to support restoration planning</li>
-        </ul>
+        <div class="org">National Institute of Hydrology (NIH), Roorkee</div>
       </div>
-
-      <div class="tl-item" data-reveal>
-        <span class="tl-period">Jan 2022 — Jun 2022</span>
+      <div class="timeline-item">
+        <div class="timeline-date">Jan 2022 – Jul 2022</div>
         <h3>Assistant Professor</h3>
-        <span class="tl-org">Civil Engineering</span>
-        <ul>
-          <li>Taught Engineering Hydrology, Fluid Mechanics, Structural Analysis and Water Resources Engineering</li>
-          <li>Designed syllabi and supervised laboratory, field and student thesis work in hydrology and flood modelling</li>
-          <li>Applied remote sensing to watershed analysis, rainfall-runoff modelling and land-use change studies</li>
-          <li>Contributed to NAAC accreditation documentation and self-study reporting</li>
-        </ul>
+        <div class="org">The Glocal University, Saharanpur</div>
       </div>
-
-      <div class="tl-item" data-reveal>
-        <span class="tl-period">Jul 2018 — Aug 2019</span>
+      <div class="timeline-item">
+        <div class="timeline-date">Jul 2018 – Aug 2019</div>
         <h3>Junior Engineer</h3>
-        <span class="tl-org">Site Engineering &amp; Construction Supervision</span>
-        <ul>
-          <li>Monitored construction progress and design compliance across active sites</li>
-          <li>Reviewed engineering drawings and resolved design discrepancies with contractors</li>
-          <li>Coordinated multidisciplinary teams to troubleshoot field issues and ensure timely handover</li>
-        </ul>
-      </div>
-
-      <div class="tl-item" data-reveal>
-        <span class="tl-period">Jan 2018 — Jun 2018</span>
-        <h3>Intern</h3>
-        <span class="tl-org">13-storey Residential Building — Site Supervision</span>
-        <ul>
-          <li>Assisted day-to-day site supervision and reviewed structural drawings for constructability</li>
-          <li>Prepared bar-bending schedules and coordinated reinforcement placement with fabrication teams</li>
-        </ul>
-      </div>
-
-      <div class="tl-item" data-reveal>
-        <span class="tl-period">May 2016 — Jul 2016</span>
-        <h3>Intern</h3>
-        <span class="tl-org">Rampur Hydro Power Station (412 MW)</span>
-        <ul>
-          <li>Hands-on exposure to large-scale hydroelectric civil works — powerhouse and intake design checks</li>
-          <li>Observed tendering procedures and project-management practice for major infrastructure</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="leadership-strip" data-reveal>
-      <span class="mini-label">Beyond the lab</span>
-      <p style="color:var(--foam-dim); max-width:60ch; margin:0;">Alongside research, Vaibhav has taken on recurring leadership roles at IIT Roorkee's Vigyan Bhawan hostel and in organising several institute-level scientific programmes.</p>
-      <div class="leadership-grid">
-        <div class="lead-card"><b>Hostel Secretary</b><span>Vigyan Bhawan, IIT Roorkee · 2024–25</span></div>
-        <div class="lead-card"><b>Cultural Secretary</b><span>Vigyan Bhawan, IIT Roorkee · Jan–Aug 2024</span></div>
-        <div class="lead-card"><b>Team Coordinator</b><span>Roorkee Water Conclave · Feb 2026</span></div>
-        <div class="lead-card"><b>Organising Head</b><span>Intl. Conf. on Future of Water Resources · Jan 2024</span></div>
-        <div class="lead-card"><b>Organising Head</b><span>RASTER 2023 Training Programme · Sep 2023</span></div>
-        <div class="lead-card"><b>Lead Coordinator</b><span>Water, Built Environment &amp; Emergency Preparedness · Apr 2024</span></div>
+        <div class="org">M/S G.S. Mehra &amp; Sons</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================ -->
-<!-- 05 · BASIN — Research Domain                                  -->
-<!-- ============================================================ -->
-<section id="basin">
-  <div class="container">
-    <div class="head-row">
-      <div>
-        <p class="eyebrow"><span class="idx">05 / BASIN</span> Research Domain</p>
-        <h2>What the water is asked to reveal</h2>
-      </div>
-      <p class="head-note">Eight threads, one basin — physical hydrology braided with data-driven modelling</p>
+<section id="publications">
+  <div class="section-inner">
+    <div class="section-head"><h2>Publications</h2><div class="rule"></div></div>
+
+    <div class="pub-controls">
+      <input type="search" class="pub-search" id="pubSearch" placeholder="Search publications by title, journal, or year…" aria-label="Search publications">
     </div>
 
-    <div class="domain-grid">
-      <div class="domain-card" data-reveal>
-        <svg class="domain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>
-        <h3>Hydroclimatic Extremes</h3>
-        <p>Characterising how compounding climate and catchment drivers push rivers into extreme flood and low-flow states.</p>
+    <div id="pubResults">
+
+    <div class="pub-year-group" data-year="2026">
+      <div class="pub-year">2026</div>
+
+      <div class="pub-item" data-text="interpretable deep learning reveals influence and interactions of hydroclimatic drivers on floods across india earth's future tripathi aghakouchak karmakar stein mohanty">
+        <span class="pub-title">Interpretable deep learning reveals influence and interactions of hydroclimatic drivers on floods across India</span>
+        <span class="pub-meta">Tripathi, V., AghaKouchak, A., Karmakar, S., Stein, L., &amp; Mohanty, M. P. — <span class="pub-journal">Earth's Future</span>, 14(7), e2026EF008397</span>
+        <div class="pub-links"><a href="https://doi.org/10.1029/2026EF008397" target="_blank" rel="noopener">DOI</a></div>
       </div>
-      <div class="domain-card" data-reveal>
-        <svg class="domain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 15c2-2 4 2 6 0s4 2 6 0 4 2 6 0"/><path d="M2 19c2-2 4 2 6 0s4 2 6 0 4 2 6 0"/><path d="M12 4v8"/><path d="M8 8l4-4 4 4"/></svg>
-        <h3>Flood Inundation Modelling</h3>
-        <p>Simulating and mapping flood extent and depth across large, often data-scarce, river basins.</p>
+
+      <div class="pub-item" data-text="coupled hydrological and public health risks from urban flooding journal of hydrology deopa tripathi nandana mohanty">
+        <span class="pub-title">Coupled hydrological and public health risks from urban flooding: integrated remote sensing, machine learning, and hydrodynamic–ecological modelling</span>
+        <span class="pub-meta">Deopa, R., Tripathi, V., Nandana, P. S., &amp; Mohanty, M. P. — <span class="pub-journal">Journal of Hydrology</span>, 135999</span>
+        <div class="pub-links"><a href="https://doi.org/10.1016/j.jhydrol.2026.135999" target="_blank" rel="noopener">DOI</a></div>
       </div>
-      <div class="domain-card" data-reveal>
-        <svg class="domain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l4-6 4 3 4-8 3 6 3-2"/><path d="M17 10l3-2 1 1" stroke-dasharray="2 2"/></svg>
-        <h3>Streamflow Forecasting</h3>
-        <p>Short- to sub-seasonal discharge forecasting with deep sequence models and formal uncertainty quantification.</p>
+
+      <div class="pub-item" data-text="rapid flood susceptibility mapping indian himalayan region cnn-u-net segmentation natural hazards rachit tripathi mohanty pandey gupta">
+        <span class="pub-title">Rapid Flood Susceptibility Mapping in the Indian Himalayan Region using CNN-U-Net Segmentation: Insights from the 2025 Monsoon Events</span>
+        <span class="pub-meta">Rachit, Tripathi, V., Mohanty, M. P., Pandey, A., &amp; Gupta, A. K. — <span class="pub-journal">Natural Hazards</span>, 122(10), 424</span>
+        <div class="pub-links"><a href="https://doi.org/10.1007/s11069-026-08175-w" target="_blank" rel="noopener">DOI</a></div>
       </div>
-      <div class="domain-card" data-reveal>
-        <svg class="domain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(28 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-28 12 12)"/></svg>
-        <h3>Remote Sensing &amp; Geospatial Hydrology</h3>
-        <p>Fusing satellite observation — historical and contemporary — with GIS to track basin change over decades.</p>
-      </div>
-      <div class="domain-card" data-reveal>
-        <svg class="domain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3h12l-4 8 4 10H6l4-10-4-8z"/><circle cx="12" cy="11" r="1" fill="currentColor" stroke="none"/></svg>
-        <h3>Ungauged Basin Hydrology</h3>
-        <p>Reconstructing discharge and catchment behaviour where no gauge record exists, at national scale.</p>
-      </div>
-      <div class="domain-card" data-reveal>
-        <svg class="domain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><path d="M7.6 7.6L10.4 10.4M16.4 7.6L13.6 10.4M7.6 16.4L10.4 13.6M16.4 16.4L13.6 13.6"/></svg>
-        <h3>Explainable AI for Hydrology</h3>
-        <p>Opening the black box — attributing model predictions back to physically meaningful catchment drivers.</p>
-      </div>
-      <div class="domain-card" data-reveal>
-        <svg class="domain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 15a4 4 0 010-8 5 5 0 019.6 1.5A3.5 3.5 0 0117 15H7z"/><path d="M9 18v2M12 18v3M15 18v2" stroke-linecap="round"/></svg>
-        <h3>Monsoon-Driven Catchment Hydrology</h3>
-        <p>Studying how the Indian monsoon's spatial and temporal variability propagates into catchment response.</p>
-      </div>
-      <div class="domain-card" data-reveal>
-        <svg class="domain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13V4a2 2 0 114 0v9a4 4 0 11-4 0z"/><path d="M12 9h1" stroke-linecap="round"/></svg>
-        <h3>Climate Change &amp; Water Resources</h3>
-        <p>Translating climate projections into actionable signals for long-term water-resource planning.</p>
+
+      <div class="pub-item" data-text="improving daily streamflow predictions large watersheds enhanced long short-term memory en-lstm water resources management sharma tripathi mohanty">
+        <span class="pub-title">Improving Daily Streamflow Predictions over Large Watersheds: Introducing a Novel Enhanced Long Short-Term Memory (En-LSTM) Model</span>
+        <span class="pub-meta">Sharma, P.*, Tripathi, V.*, &amp; Mohanty, M. P. — <span class="pub-journal">Water Resources Management</span>, 40(2), 92</span>
+        <div class="pub-links"><a href="https://doi.org/10.1007/s11269-025-04475-1" target="_blank" rel="noopener">DOI</a></div>
       </div>
     </div>
+
+    <div class="pub-year-group" data-year="2025">
+      <div class="pub-year">2025</div>
+
+      <div class="pub-item" data-text="cascading impacts 2025 june-july multi-hazard episodes western himalayas natural hazards deopa singh tripathi tyagi mohanty">
+        <span class="pub-title">Cascading impacts of 2025 June–July multi-hazard episodes in the Western Himalayas: Evidence through remote sensing observations and Google Earth Engine</span>
+        <span class="pub-meta">Deopa, R., Singh, H., Tripathi, V., Tyagi, M., &amp; Mohanty, M. P. — <span class="pub-journal">Natural Hazards</span>, 121(19), 23417–23422</span>
+        <div class="pub-links"><a href="https://doi.org/10.1007/s11069-025-07699-x" target="_blank" rel="noopener">DOI</a></div>
+      </div>
+
+      <div class="pub-item" data-text="novel framework embedding bayesian-optimized ensemble machine learning explainable artificial intelligence xai flood prediction complex watersheds alam tripathi bhatt mohanty">
+        <span class="pub-title">A Novel Framework Embedding Bayesian-optimized Ensemble Machine Learning and Explainable Artificial Intelligence (XAI) to Improve Flood Prediction in Complex Watersheds</span>
+        <span class="pub-meta">Alam, M. G., Tripathi, V., Bhatt, C. M., &amp; Mohanty, M. P. — <span class="pub-journal">Environmental and Sustainability Indicators</span>, 27, 100760</span>
+        <div class="pub-links"><a href="https://doi.org/10.1016/j.indic.2025.100760" target="_blank" rel="noopener">DOI</a></div>
+      </div>
+
+      <div class="pub-item" data-text="geomorphic flood descriptors machine learning data-scarce catchments ganga basin environmental science pollution research tripathi mohanty">
+        <span class="pub-title">Can geomorphic flood descriptors coupled with machine learning models enhance quantifying flood risks over data-scarce catchments? A hybrid framework for the Ganga basin (India)</span>
+        <span class="pub-meta">Tripathi, V., &amp; Mohanty, M. P. — <span class="pub-journal">Environmental Science and Pollution Research</span>, 32(59), 31475–31494</span>
+        <div class="pub-links"><a href="https://doi.org/10.1007/s11356-024-33507-3" target="_blank" rel="noopener">DOI</a></div>
+      </div>
+    </div>
+
+    <div class="pub-year-group" data-year="2024">
+      <div class="pub-year">2024</div>
+
+      <div class="pub-item" data-text="fidelity machine learning models capturing flood inundation geomorphic descriptors ganga sub-basin european water tripathi mohanty singh">
+        <span class="pub-title">Fidelity of machine learning models in capturing flood inundation through geomorphic descriptors over Ganga sub-basin, India</span>
+        <span class="pub-meta">Tripathi, V., Mohanty, M. P., &amp; Singh, H. — <span class="pub-journal">European Water</span>, 87–88, 1–10</span>
+        <div class="pub-links"><a href="https://www.ewra.net/ew/pdf/EW_2024_87-88_01.pdf" target="_blank" rel="noopener">PDF</a></div>
+      </div>
+    </div>
+
+    <div class="pub-year-group" data-year="under review">
+      <div class="pub-year">Under review</div>
+
+      <div class="pub-item" data-text="regime-dependent performance baseflow separation methods monsoon-dominated catchments india environmental research letters tripathi mohanty">
+        <span class="pub-title">Regime-dependent performance of baseflow separation methods across monsoon-dominated catchments in India</span>
+        <span class="pub-meta">Tripathi, V., &amp; Mohanty, M. P. — <span class="pub-journal">Environmental Research Letters</span> (IOP) <span class="pub-badge">revision submitted</span></span>
+      </div>
+
+      <div class="pub-item" data-text="nationwide daily baseflow estimation india temporal fusion transformers process-informed clustering scientific data nature tripathi mohanty">
+        <span class="pub-title">Nationwide Daily Baseflow Estimation in India (1980–2020) Using Temporal Fusion Transformers and Process-Informed Clustering</span>
+        <span class="pub-meta">Tripathi, V., &amp; Mohanty, M. P. — to be submitted to <span class="pub-journal">Scientific Data</span> (Nature)</span>
+      </div>
+
+      <div class="pub-item" data-text="cluster-specific deep learning models global architectures multi-horizon streamflow forecasting temporal fusion transformers journal of hydrology tripathi mohanty">
+        <span class="pub-title">Do Cluster-Specific Deep Learning Models Outperform Global Architectures in Multi-Horizon Streamflow Forecasting? Insights from Temporal Fusion Transformers Across Indian Catchments</span>
+        <span class="pub-meta">Tripathi, V., &amp; Mohanty, M. P. — to be submitted to <span class="pub-journal">Journal of Hydrology</span> (Elsevier)</span>
+      </div>
+    </div>
+
+    </div>
+    <p id="pubEmpty" style="display:none; color:var(--slate-light);">No publications match your search.</p>
   </div>
 </section>
 
-<!-- ============================================================ -->
-<!-- 06 · GAUGE LOG — Publications                                 -->
-<!-- ============================================================ -->
-<section id="gauge-log">
-  <div class="container">
-    <div class="head-row">
-      <div>
-        <p class="eyebrow"><span class="idx">06 / GAUGE LOG</span> Publications</p>
-        <h2>Readings on record</h2>
-      </div>
-      <p class="head-note">Peer-reviewed articles and manuscripts in the pipeline</p>
-    </div>
-
-    <div class="filter-row" role="group" aria-label="Filter publications">
-      <button class="filter-btn" data-filter="all" aria-pressed="true">All</button>
-      <button class="filter-btn" data-filter="published" aria-pressed="false">Published</button>
-      <button class="filter-btn" data-filter="review" aria-pressed="false">Under Review</button>
-    </div>
-
-    <ul class="pub-list" id="pubList">
-      <li class="pub-item" data-status="published">
-        <span class="pub-num">01</span>
-        <div>
-          <div class="pub-title">Coupled hydrological and public health risks from urban flooding: integrated remote sensing, machine learning, and hydrodynamic–ecological modelling</div>
-          <span class="pub-status published">Published</span>
-        </div>
-        <a class="pub-link" href="https://www.sciencedirect.com/science/article/pii/S0022169426010966" target="_blank" rel="noopener">Read paper ↗</a>
-      </li>
-      <li class="pub-item" data-status="published">
-        <span class="pub-num">02</span>
-        <div>
-          <div class="pub-title">Interpretable Deep Learning Reveals Influence and Interactions of Hydroclimatic Drivers on Floods Across India</div>
-          <span class="pub-status published">Published</span>
-        </div>
-        <a class="pub-link" href="https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2026EF008397" target="_blank" rel="noopener">Read paper ↗</a>
-      </li>
-      <li class="pub-item" data-status="published">
-        <span class="pub-num">03</span>
-        <div>
-          <div class="pub-title">Can geomorphic flood descriptors coupled with machine learning models enhance quantification of flood risks over data-scarce catchments? A hybrid framework for the Ganga basin (India)</div>
-          <span class="pub-status published">Published</span>
-        </div>
-        <a class="pub-link" href="https://doi.org/10.1007/s11356-024-33507-3" target="_blank" rel="noopener">Read paper ↗</a>
-      </li>
-      <li class="pub-item" data-status="published">
-        <span class="pub-num">04</span>
-        <div>
-          <div class="pub-title">Improving Daily Streamflow Predictions over Large Watersheds: Introducing a Novel Enhanced Long Short-Term Memory (En-LSTM)</div>
-          <span class="pub-status published">Published</span>
-        </div>
-        <a class="pub-link" href="https://doi.org/10.1007/s11269-025-04475-1" target="_blank" rel="noopener">Read paper ↗</a>
-      </li>
-      <li class="pub-item" data-status="published">
-        <span class="pub-num">05</span>
-        <div>
-          <div class="pub-title">Rapid Flood Susceptibility Mapping in the Indian Himalayan Region using CNN-U-Net Segmentation: Insights from the 2025 Monsoon Events</div>
-          <span class="pub-status published">Published</span>
-        </div>
-        <a class="pub-link" href="https://doi.org/10.1007/s11069-026-08175-w" target="_blank" rel="noopener">Read paper ↗</a>
-      </li>
-      <li class="pub-item" data-status="published">
-        <span class="pub-num">06</span>
-        <div>
-          <div class="pub-title">Cascading impacts of 2025 June–July multi-hazard episodes in the Western Himalayas: evidence through remote sensing observations and Google Earth Engine</div>
-          <span class="pub-status published">Published</span>
-        </div>
-        <a class="pub-link" href="https://doi.org/10.1007/s11069-025-07699-x" target="_blank" rel="noopener">Read paper ↗</a>
-      </li>
-      <li class="pub-item" data-status="published">
-        <span class="pub-num">07</span>
-        <div>
-          <div class="pub-title">Novel framework embedding Bayesian-optimised ensemble machine learning and explainable AI (XAI) to improve flood prediction in complex watersheds</div>
-          <span class="pub-status published">Published</span>
-        </div>
-        <a class="pub-link" href="https://doi.org/10.1016/j.indic.2025.100760" target="_blank" rel="noopener">Read paper ↗</a>
-      </li>
-      <li class="pub-item" data-status="published">
-        <span class="pub-num">08</span>
-        <div>
-          <div class="pub-title">Fidelity of machine learning models in capturing flood inundation through geomorphic descriptors over the Ganga sub-basin, India</div>
-          <span class="pub-status published">Published</span>
-        </div>
-        <a class="pub-link" href="https://www.ewra.net/ew/pdf/EW_2024_87-88_01.pdf" target="_blank" rel="noopener">Read paper ↗</a>
-      </li>
-      <li class="pub-item" data-status="review">
-        <span class="pub-num">09</span>
-        <div>
-          <div class="pub-title">Flood event identification in Peninsular India from 1980 to 2020 over 206 river catchments</div>
-          <span class="pub-status review">Under Review</span>
-        </div>
-        <span class="pub-link" style="opacity:.5; cursor:default;">In review</span>
-      </li>
-      <li class="pub-item" data-status="review">
-        <span class="pub-num">10</span>
-        <div>
-          <div class="pub-title">A TabNet architecture with feature and attentive transformers for predicting flood peak magnitude from static and dynamic catchment features</div>
-          <span class="pub-status review">Under Review</span>
-        </div>
-        <span class="pub-link" style="opacity:.5; cursor:default;">In review</span>
-      </li>
+<section id="conferences">
+  <div class="section-inner">
+    <div class="section-head"><h2>Conferences &amp; Workshops</h2><div class="rule"></div></div>
+    <ul class="plain-list conf-list">
+      <li>Tripathi, V., Manfreda, S., Samela, C., Navarro, J. S., &amp; Mohanty, M. P. (2026). Regime-Dependent Evaluation of the Geomorphic Flood Index Using ERA5-Driven Hydrodynamic Simulations and Satellite Inundation over a Large Monsoon Basin.<span class="pub-meta">IEEE-IGARSS 2026, Washington, D.C., USA — student travel grant, GRSS &amp; ANRF, India</span></li>
+      <li>Tripathi, V., Singh, H., &amp; Mohanty, M. P. (2026). Ungauged Tributary Discharge Reconstruction for Monsoon Flood Inundation Modelling: A Geomorphic-Recession Approach Applied to Peninsular India.<span class="pub-meta">EGU General Assembly 2026, Vienna, Austria (EGU26-815)</span></li>
+      <li>Tripathi, V., Shaw, A., &amp; Mohanty, M. P. (2025). Nationwide Daily Baseflow Estimation in India (1980–2020) Using Temporal Fusion Transformers &amp; Process-Informed Clustering.<span class="pub-meta">AGU Annual Meeting 2025, New Orleans, USA</span></li>
+      <li>Tripathi, V., Karmakar, S., AghaKouchak, A., Mohanty, M. P., &amp; Stein, L. (2025). Floods at the Crossroads of Climate &amp; Human Impact: A Process-Based, Explainable AI Framework for Indian Catchments.<span class="pub-meta">AGU Annual Meeting 2025, New Orleans, USA</span></li>
+      <li>Tripathi, V., &amp; Mohanty, M. P. (2025). Interpretable AI for Flood Process Attribution &amp; Prediction in Indian Catchments under Climate &amp; Anthropogenic Influence.<span class="pub-meta">5th International Vietnam Conference on Earth &amp; Environmental Sciences (iVCEES-2025) — student travel grant</span></li>
+      <li>Tripathi, V., Deopa, R., &amp; Mohanty, M. P. (2025). Unraveling Hydrometeorological Drivers of Floods: A Data-Driven Analysis Across India's River Catchments.<span class="pub-meta">EGU General Assembly 2025, Vienna, Austria (EGU25-15096)</span></li>
+      <li>Tripathi, V., &amp; Mohanty, M. P. (2024). A Hybrid Framework of Integrating Geomorphic Flood Descriptors &amp; Machine Learning Models to Account Flood Risk over an Ungauged Basin.<span class="pub-meta">HIWeather Final Conference 2024, Munich, Germany — travel grant, WMO</span></li>
+      <li>Mohanty, M., &amp; Tripathi, V. (2024). Can Catchment Attributes Coupled with an Ensemble of Machine Learning Improve Flood Hazard Mapping over Large Data-Scarce Catchments?<span class="pub-meta">EGU General Assembly 2024, Vienna, Austria (EGU24-9063)</span></li>
+      <li>Tripathi, V., &amp; Mohanty, M. P. (2023). Toward Quantifying Flood Hazards over Large Flood-Prone River Basins through an Ensemble of Geomorphic Flood Descriptors &amp; Machine Learning Models.<span class="pub-meta">AGU Annual Meeting 2023, USA</span></li>
+      <li>Tripathi, V., &amp; Mohanty, M. P. (2023). Employing CORDEX-RCMs for Augmenting the Performance of Geomorphic Flood Descriptors over Large Flood-Prone &amp; Ungauged Watersheds.<span class="pub-meta">WCRP Open Science Conference 2023, Rwanda</span></li>
+      <li>Tripathi, V., Singh, H., &amp; Mohanty, M. P. (2023). Fidelity of Machine Learning Models in Capturing Flood Inundation through Geomorphic Descriptors over Ganga Sub-Basin, India.<span class="pub-meta">12th World Congress, EWRA 2023, Thessaloniki, Greece</span></li>
     </ul>
   </div>
 </section>
 
-<!-- ============================================================ -->
-<!-- 07 · CONFLUENCE — Conferences, Awards, Skills                 -->
-<!-- ============================================================ -->
-<section id="confluence">
-  <div class="container">
-    <div class="head-row">
+<section id="awards">
+  <div class="section-inner">
+    <div class="section-head"><h2>Awards &amp; Honours</h2><div class="rule"></div></div>
+    <ul class="plain-list">
+      <li>Travel grant — S2S2D Conference, University of Reading, UK (Sept 2026)</li>
+      <li>Travel grant — IEEE International Geoscience and Remote Sensing Symposium, Washington, D.C. (Aug 2026)</li>
+      <li>Travel grant, Dean of Resources &amp; Alumni Affairs, IIT Roorkee — EGU General Assembly 2026, Vienna</li>
+      <li>Travel grant, World Climate Research Programme (WCRP) — 5th iVCEES 2025, Quy Nhon, Vietnam</li>
+      <li>Travel grant, World Meteorological Organisation (WMO) — HIWeather Final Conference 2024, Munich</li>
+      <li>Travel grant — Urban Flood Modelling in a Changing Climate course, BITS Pilani–Hyderabad (2024)</li>
+      <li>Travel grant — Hydro-ML workshop, sponsored by DST, IISER Bhopal (2024)</li>
+      <li>Travel grant — poster presentation, IndoML 2023, IIT Bombay</li>
+      <li>Best Oral Presentation Award — Research Scholars Day, WRD&amp;M, IIT Roorkee</li>
+      <li>Ministry of Human Resource Development (MHRD) fellowship for PhD, IIT Roorkee</li>
+      <li>Qualified GATE 2019 &amp; 2021; awarded M.Tech scholarship</li>
+    </ul>
+  </div>
+</section>
+
+<section id="service">
+  <div class="section-inner">
+    <div class="section-head"><h2>Teaching &amp; Leadership</h2><div class="rule"></div></div>
+    <ul class="plain-list">
+      <li>Teaching Assistant — River Engineering &amp; Drinking Water Sanitation (postgraduate), IIT Roorkee</li>
+      <li>Guest lecture &amp; hands-on session on ML for flood hazard mapping — RASTER 2023, IIT Roorkee</li>
+      <li>Guest lecture on ML applications — 10-Day Online FDP, NIT Patna</li>
+      <li>Student Team Coordinator — Roorkee Water Conclave, IIT Roorkee (Feb 2026)</li>
+      <li>Hostel Secretary, Hostel Affairs, IIT Roorkee (2024–25)</li>
+      <li>Cultural Secretary, Vigyan Bhawan, IIT Roorkee (Jan–Aug 2024)</li>
+      <li>Lead Coordinator — "Water, Built Environment &amp; Emergency Preparedness" training, IIT Roorkee (Apr 2024)</li>
+      <li>Organising Head — International Conference on Future of Water Resources, IIT Roorkee (Jan 2024)</li>
+      <li>Organising Head — RASTER 2023 training program, IIT Roorkee</li>
+      <li>College Ambassador (2 years), BML Munjal University</li>
+    </ul>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-head"><h2>Skills &amp; Memberships</h2><div class="rule"></div></div>
+    <div class="skills-grid">
       <div>
-        <p class="eyebrow"><span class="idx">07 / CONFLUENCE</span> Global Reach</p>
-        <h2>Where the tributaries meet</h2>
+        <h3>Hydrologic / hydrodynamic software</h3>
+        <div class="tag-row"><span>HEC-RAS</span><span>HEC-HMS</span><span>SWAT+</span><span>LISFLOOD-FP</span></div>
       </div>
-      <p class="head-note">21 conference &amp; workshop presentations across 5 countries</p>
-    </div>
-
-    <div class="confluence-grid">
-      <div data-reveal>
-        <span class="mini-label">Recent &amp; upcoming waypoints</span>
-        <div class="waypoints">
-          <div class="waypoint">
-            <span class="coord">29.86°N 77.89°E</span>
-            <h4>IAHS Scientific Assembly</h4>
-            <p>Roorkee, India · Oct 2025</p>
-          </div>
-          <div class="waypoint">
-            <span class="coord">29.95°N 90.07°W</span>
-            <h4>AGU Annual Meeting</h4>
-            <p>New Orleans, USA · Dec 2025</p>
-          </div>
-          <div class="waypoint">
-            <span class="coord">13.77°N 109.22°E</span>
-            <h4>iVCEES 2025</h4>
-            <p>Quy Nhơn, Vietnam · Nov 2025</p>
-          </div>
-          <div class="waypoint">
-            <span class="coord">48.14°N 11.58°E</span>
-            <h4>HIWeather Final Conference</h4>
-            <p>Munich, Germany · Sep 2024</p>
-          </div>
-          <div class="waypoint">
-            <span class="coord">48.21°N 16.37°E</span>
-            <h4>EGU General Assembly</h4>
-            <p>Vienna, Austria · May 2026</p>
-            <span class="tag">upcoming</span>
-          </div>
-          <div class="waypoint">
-            <span class="coord">38.90°N 77.04°W</span>
-            <h4>IEEE IGARSS 2026</h4>
-            <p>Washington D.C., USA · Aug 2026</p>
-            <span class="tag">upcoming</span>
-          </div>
-          <div class="waypoint">
-            <span class="coord">51.44°N 0.94°W</span>
-            <h4>S2S2D Conference</h4>
-            <p>University of Reading, UK · Sep 2026</p>
-            <span class="tag">upcoming</span>
-          </div>
-        </div>
-
-        <details class="full-log">
-          <summary><span>View all 21 conference &amp; workshop presentations</span></summary>
-          <ul class="log-list" id="fullLog"></ul>
-        </details>
+      <div>
+        <h3>GIS</h3>
+        <div class="tag-row"><span>Google Earth Engine</span><span>ArcGIS</span><span>GRASS GIS</span><span>QGIS</span></div>
       </div>
-
-      <div class="side-col" data-reveal>
-        <h3>Selected Awards</h3>
-        <ul class="award-list">
-          <li>Best Oral Presentation — Research Scholars Day, WRD&amp;M, IIT Roorkee</li>
-          <li>Student travel grants — S2S2D (Reading), IGARSS (Washington D.C.), EGU (Vienna), iVCEES (Vietnam), HIWeather (Munich)</li>
-          <li>Travel grant — "Urban Flood Modelling in a Changing Climate," BITS Pilani–Hyderabad, 2024</li>
-          <li>Travel grant — "Application of ML in Hydrology (Hydro-ML)," IISER Bhopal, 2024</li>
-          <li>Travel grant — IndoML 2023 poster presentation, IIT Bombay</li>
-        </ul>
-
+      <div>
+        <h3>Programming &amp; statistics</h3>
+        <div class="tag-row"><span>Python</span><span>MATLAB</span><span>Machine Learning</span><span>Deep Learning</span><span>SPSS</span></div>
+      </div>
+      <div>
         <h3>Memberships</h3>
-        <div class="chip-group">
-          <span class="chip">IWRS</span>
-          <span class="chip">IAHS</span>
-          <span class="chip">IEEE</span>
-          <span class="chip">GRSS</span>
-          <span class="chip">AGU</span>
-          <span class="chip">EGU</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="skills-block">
-      <div>
-        <div class="skill-cat">
-          <span class="mini-label">Hydrologic / Hydrodynamic Software</span>
-          <div class="chip-group"><span class="chip">HEC-RAS</span><span class="chip">HEC-HMS</span><span class="chip">SWAT+</span><span class="chip">LISFLOOD-FP</span></div>
-        </div>
-        <div class="skill-cat">
-          <span class="mini-label">GIS &amp; Remote Sensing</span>
-          <div class="chip-group"><span class="chip">Google Earth Engine</span><span class="chip">ArcGIS</span><span class="chip">GRASS GIS</span><span class="chip">QGIS</span></div>
-        </div>
-        <div class="skill-cat">
-          <span class="mini-label">Programming &amp; Statistics</span>
-          <div class="chip-group"><span class="chip">Python</span><span class="chip">MATLAB</span><span class="chip">Machine Learning</span><span class="chip">Deep Learning</span><span class="chip">SPSS</span></div>
-        </div>
-      </div>
-      <div>
-        <div class="skill-cat">
-          <span class="mini-label">Design Packages</span>
-          <div class="chip-group"><span class="chip">AutoCAD</span><span class="chip">Revit</span></div>
-        </div>
-        <div class="skill-cat">
-          <span class="mini-label">Courses Taught</span>
-          <div class="chip-group">
-            <span class="chip">Engineering Hydrology</span>
-            <span class="chip">Water Resources Engineering</span>
-            <span class="chip">Fluid Mechanics</span>
-            <span class="chip">Open Channel Flow</span>
-            <span class="chip">River Engineering</span>
-            <span class="chip">Drinking Water &amp; Sanitation</span>
-          </div>
-        </div>
+        <div class="tag-row"><span>IAHS</span><span>IWRS</span><span>GRSS</span><span>IEEE</span><span>AGU</span><span>EGU</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================ -->
-<!-- 08 · ESTUARY — Contact                                        -->
-<!-- ============================================================ -->
-<section id="estuary" class="estuary">
-  <div class="container">
-    <div class="estuary-grid">
-      <div data-reveal>
-        <p class="eyebrow"><span class="idx">08 / ESTUARY</span> Contact</p>
-        <h2>Let's talk water</h2>
-        <p class="estuary-copy">Open to discussing research ideas, collaborations, and opportunities in hydrology, climate science, and data-driven environmental modelling.</p>
-        <div class="email-row">
-          <button class="email-btn" id="copyEmail">vaib.tripathi28.vt@gmail.com — copy</button>
-          <span class="copy-feedback" id="copyFeedback">Copied to clipboard ✓</span>
-        </div>
-        <div class="coord-block">
-          <b>Department of Water Resources Development &amp; Management</b><br>
-          Indian Institute of Technology Roorkee<br>
-          Roorkee, Uttarakhand, India<br>
-          29.8543°N, 77.8880°E
-        </div>
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-head"><h2>Contact</h2><div class="rule"></div></div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value"><a href="mailto:vaibhav_t@wr.iitr.ac.in">vaibhav_t@wr.iitr.ac.in</a></div>
       </div>
-
-      <div data-reveal>
-        <span class="mini-label">Find the work elsewhere</span>
-        <div class="link-plates">
-          <a class="plate" href="https://scholar.google.com/citations?user=O1Bh_UwAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar <span class="arrow">↗</span></a>
-          <a class="plate" href="https://orcid.org/0009-0009-8407-6291" target="_blank" rel="noopener">ORCID <span class="arrow">↗</span></a>
-          <a class="plate" href="https://www.researchgate.net/profile/Vaibhav-Tripathi-12" target="_blank" rel="noopener">ResearchGate <span class="arrow">↗</span></a>
-          <a class="plate" href="https://www.scopus.com/authid/detail.uri?authorId=59788271800" target="_blank" rel="noopener">Scopus <span class="arrow">↗</span></a>
-          <a class="plate" href="https://www.linkedin.com/in/vaibhavtripathi08/" target="_blank" rel="noopener">LinkedIn <span class="arrow">↗</span></a>
-          <a class="plate" href="mailto:vaib.tripathi28.vt@gmail.com">Email <span class="arrow">↗</span></a>
-        </div>
+      <div>
+        <div class="contact-label">Phone</div>
+        <div class="contact-value">+91 70821 80824</div>
+      </div>
+      <div>
+        <div class="contact-label">Department</div>
+        <div class="contact-value">Water Resources Development &amp; Management, IIT Roorkee</div>
+      </div>
+      <div>
+        <div class="contact-label">Elsewhere</div>
+        <div class="contact-value"><a href="#" id="link-linkedin-2">LinkedIn</a> · <a href="#" id="link-scholar-2">Google Scholar</a></div>
       </div>
     </div>
+    <a class="cv-button" href="assets/files/Vaibhav_Tripathi_CV.pdf">Download full CV (PDF)</a>
   </div>
 </section>
 
 </main>
 
 <footer>
-  <span>© <span id="year"></span> Vaibhav Tripathi · Built as a river runs — from source to estuary</span>
-  <span><a href="#source">Back to source ↑</a></span>
+  <p>Vaibhav Tripathi · Department of Water Resources Development &amp; Management · IIT Roorkee</p>
 </footer>
 
-<script>
-(function(){
-  "use strict";
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- Mobile nav ---------- */
-  var menuBtn = document.getElementById('menuBtn');
-  var mobileNav = document.getElementById('mobileNav');
-  var mobileClose = document.getElementById('mobileClose');
-  function openNav(){ mobileNav.classList.add('open'); menuBtn.setAttribute('aria-expanded','true'); }
-  function closeNav(){ mobileNav.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false'); }
-  if(menuBtn){
-    menuBtn.addEventListener('click', openNav);
-    mobileClose.addEventListener('click', closeNav);
-    mobileNav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeNav); });
-  }
-
-  /* ---------- Scroll reveal ---------- */
-  var revealEls = document.querySelectorAll('[data-reveal]');
-  if('IntersectionObserver' in window && !reduceMotion){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); }
-      });
-    }, { threshold: .15, rootMargin: '0px 0px -60px 0px' });
-    revealEls.forEach(function(el){ io.observe(el); });
-  } else {
-    revealEls.forEach(function(el){ el.classList.add('in-view'); });
-  }
-
-  /* ---------- Scrollspy for rail nav ---------- */
-  var sections = document.querySelectorAll('main section[id]');
-  var railLinks = document.querySelectorAll('.rail-stations a');
-  if('IntersectionObserver' in window && railLinks.length){
-    var spy = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){
-          railLinks.forEach(function(l){ l.classList.remove('active'); });
-          var link = document.querySelector('.rail-stations a[data-station="'+e.target.id+'"]');
-          if(link) link.classList.add('active');
-        }
-      });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    sections.forEach(function(s){ spy.observe(s); });
-  }
-
-  /* ---------- Hydrograph draw-in ---------- */
-  var hgPath = document.getElementById('hgPath');
-  if(hgPath){
-    if(reduceMotion){
-      hgPath.style.strokeDasharray = 'none';
-    } else {
-      var len = hgPath.getTotalLength();
-      hgPath.style.strokeDasharray = len;
-      hgPath.style.strokeDashoffset = len;
-      hgPath.style.transition = 'stroke-dashoffset 2.1s cubic-bezier(.4,.1,.2,1) .3s';
-      requestAnimationFrame(function(){
-        requestAnimationFrame(function(){ hgPath.style.strokeDashoffset = '0'; });
-      });
-    }
-  }
-
-  /* ---------- Animated stat counters ---------- */
-  var stats = document.querySelectorAll('[data-count]');
-  function animateCount(el){
-    var target = parseInt(el.getAttribute('data-count'), 10);
-    if(reduceMotion){ el.textContent = target; return; }
-    var start = null, duration = 1200;
-    function step(ts){
-      if(!start) start = ts;
-      var progress = Math.min((ts - start) / duration, 1);
-      el.textContent = Math.floor(progress * target);
-      if(progress < 1) requestAnimationFrame(step);
-      else el.textContent = target;
-    }
-    requestAnimationFrame(step);
-  }
-  if('IntersectionObserver' in window && stats.length){
-    var statIO = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ animateCount(e.target); statIO.unobserve(e.target); }
-      });
-    }, { threshold: .6 });
-    stats.forEach(function(s){ statIO.observe(s); });
-  }
-
-  /* ---------- Publication filters ---------- */
-  var filterBtns = document.querySelectorAll('.filter-btn');
-  var pubItems = document.querySelectorAll('.pub-item');
-  filterBtns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      filterBtns.forEach(function(b){ b.setAttribute('aria-pressed','false'); });
-      btn.setAttribute('aria-pressed','true');
-      var filter = btn.getAttribute('data-filter');
-      pubItems.forEach(function(item){
-        var status = item.getAttribute('data-status');
-        var show = (filter === 'all') || (filter === status);
-        item.classList.toggle('hidden', !show);
-      });
-    });
-  });
-
-  /* ---------- Copy email ---------- */
-  var copyBtn = document.getElementById('copyEmail');
-  var copyFeedback = document.getElementById('copyFeedback');
-  if(copyBtn){
-    copyBtn.addEventListener('click', function(){
-      var email = 'vaib.tripathi28.vt@gmail.com';
-      var done = function(){
-        copyFeedback.classList.add('show');
-        setTimeout(function(){ copyFeedback.classList.remove('show'); }, 2200);
-      };
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(email).then(done).catch(function(){ window.location.href = 'mailto:'+email; });
-      } else {
-        window.location.href = 'mailto:'+email;
-      }
-    });
-  }
-
-  /* ---------- Full conference log (populated from data to keep markup light) ---------- */
-  var conferences = [
-    "Tripathi, V. & Mohanty, M. P. (2026) Transfer-learned Transformers for Subseasonal Streamflow Forecasting in Monsoon-Dominated, Data-Sparse Catchments — S2S2D 2026, Reading, UK.",
-    "Tripathi, V., Manfreda, S., Samela, C., Navarro, J.S. & Mohanty, M. P. (2026) Regime-Dependent Evaluation of the Geomorphic Flood Index Using ERA5-Driven Hydrodynamic Simulations — IEEE IGARSS 2026, Washington D.C., USA.",
-    "Tripathi, V. & Mohanty, M.P. (2026) Ungauged Tributary Discharge Reconstruction for Monsoon Flood Inundation Modelling — EGU General Assembly 2026, Vienna, Austria.",
-    "Tripathi, V., Shaw, A., & Mohanty, M.P. (2025) Nationwide Daily Baseflow Estimation in India (1980–2020) Using Temporal Fusion Transformers & Process-Informed Clustering — AGU Annual Meeting 2025, New Orleans, USA.",
-    "Tripathi, V., Karmakar, S., Aghakouchak, A., Mohanty, M.P. & Stein, L. (2025) Floods at the Crossroads of Climate & Human Impact: A Process-Based, Explainable AI Framework — AGU Annual Meeting 2025, New Orleans, USA.",
-    "Rachit, Tripathi, V., Mohanty, M. P., Pandey, A. & Gupta, A. K. (2025) Integrated Multi-Hazard Susceptibility Mapping across India using U-Net Deep Learning — AGU Annual Meeting 2025, New Orleans, USA.",
-    "Tripathi, V. & Mohanty, M.P. (2025) Interpretable AI for Flood Process Attribution & Prediction in Indian Catchments — 5th iVCEES 2025, Quy Nhơn, Vietnam.",
-    "Tripathi, V. & Mohanty, M.P. (2025) Process-Based Classification of River Floods Using Explainable ML in Monsoon-Dominated Catchments — XIIth IAHS Scientific Assembly 2025, Roorkee, India.",
-    "Rachit, Tripathi, V., Mohanty, M. P., Pandey, A., Gupta, A. K. (2025) Multi-Hazard Susceptibility Mapping over India through Deep Learning — XIIth IAHS Scientific Assembly 2025, Roorkee, India.",
-    "Tripathi, V., Deopa, R., & Mohanty, M. P. (2025) Unraveling Hydrometeorological Drivers of Floods: A Data-Driven Analysis Across India's River Catchments — EGU25-15096, Vienna, Austria.",
-    "Deopa, R., Mishra, D., Kumar Shahi, N., Tripathi, V., & Mohanty, M. P. (2025) Quantifying Human Health Risks from Contaminated Urban Floodwaters — EGU25-15444, Vienna, Austria.",
-    "Tripathi, V. & Mohanty, M. P. (2024) A Hybrid Framework Integrating Geomorphic Flood Descriptors & ML to Account for Flood Risk over an Ungauged Basin — HIWeather Final Conference 2024, Munich, Germany.",
-    "Mohanty, M., & Tripathi, V. (2024) Can Catchment Attributes Coupled with an Ensemble of ML Improve Flood Hazard Mapping over Large Data-Scarce Catchments? — EGU24, 9063.",
-    "Tripathi, V., & Mohanty, M. P. (2024) Blending Geomorphic Flood Descriptors and Advanced ML for Flood Risk Estimation over the Mahanadi Basin — Chapman Conference on Remote Sensing of the Water Cycle, AGU.",
-    "Tripathi, V. & Mohanty. M. P. (2024) Explainable Machine Learning Model with RFE for Flood Susceptibility Assessment Integrating Catchment Attributes — ICFWR, IIT Roorkee.",
-    "Tripathi, V. & Mohanty. M. P. (2023) Toward Quantifying Flood Hazards over Large Flood-Prone River Basins through an Ensemble of Geomorphic Flood Descriptors & ML Models — AGU Annual Meeting 2023, USA.",
-    "Singh, H., Tripathi, V., & Mohanty, M. P. (2023) Can Regional Climate Models Represent Flood Hazards at Regional Scales? — WCRP Open Science Conference 2023, Rwanda.",
-    "Tripathi, V., & Mohanty, M.P. (2023) Employing CORDEX-RCMs for Augmenting the Performance of Geomorphic Flood Descriptors over Large Flood-Prone & Ungauged Watersheds — WCRP OSC 2023, Rwanda.",
-    "Deopa, R., Tripathi, V., Mohanty, M.P. (2023) Capturing the Teleconnections of Climate Change & Socio-Economic Structures on Flood & Human Health Risks — WCRP OSC 2023, Rwanda.",
-    "Tripathi, V. & Mohanty. M. P. (2023) Leveraging CORDEX Simulations with Geomorphic Flood Descriptors — ICRC-CORDEX 2023, Trieste, Italy.",
-    "Tripathi, V., Singh, H., Mohanty, M.P. (2023) Fidelity of Machine Learning Models in Capturing Flood Inundation through Geomorphic Descriptors over Ganga Sub-Basin, India — EWRA 2023, Thessaloniki, Greece."
-  ];
-  var logEl = document.getElementById('fullLog');
-  if(logEl){
-    conferences.forEach(function(text){
-      var li = document.createElement('li');
-      li.textContent = text;
-      logEl.appendChild(li);
-    });
-  }
-
-  document.getElementById('year').textContent = new Date().getFullYear();
-})();
-</script>
-
+<script src="assets/js/main.js"></script>
 </body>
 </html>
